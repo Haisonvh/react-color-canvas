@@ -1,11 +1,8 @@
 .App {
+  padding-top: 50px;
   text-align: center;
 }
 
 .Card {
   maxWidth: 345;
-}
-
-.AppContent {
-  padding-top: 70px;
 }
