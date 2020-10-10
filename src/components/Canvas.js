@@ -8,31 +8,37 @@ const Canvas = props => {
   const blue = [...red];
   let renderValue = [];
   useEffect(()=>{
-    renderValue = arrangeData(red,green,blue);
+    renderValue = arrangeData(red,green,blue,size);
     setRgbData(renderValue);
   },renderValue);
 
   return <canvas
+    data-testid="test-canvas"
     ref={canvasRef}
     width={size[0]}
     height={size[1]}/>
 };
 
-const genValue = (step) =>{
+export const genValue = (step) =>{
   let temp = [];
-  for (let i=0; i<256;i+=step){
+  for (let i=step; i<=256;i+=step){
     temp = [...temp,i];
   }
   return temp;
 };
 
-const arrangeData = (red,green,blue) => {
-  const response= red.map((r)=>{
-    return green.map((g) => {
-        return blue.map(b => [r,g,b]);
-    });
-  }).flat(2);
+export const arrangeData = (red,green,blue,size) => {
+  let response = [];
+  for (let y = 0; y < size[1] ;y++){
+    for (let x = 0 ; x < size[0] ; x++){
+      let stepx = Math.floor(x/32);
+      let stepy = Math.floor(y/32);
+      const indexR = Math.abs((32*stepx) - x + (stepx%2)*31); //indexR = [0..31,31..0,0..31.......]
+      const indexG = Math.abs((32*stepy) - y + (stepy%2)*31);//indexG = [0..31,31..0,0..31.......]
+      const indexB = stepy*8 + stepx;//indexB = [0..31]
+      response.push([red[indexR],green[indexG],blue[indexB]]);
+    }
+  }
   return response;
-}
-
+};
 export default Canvas
