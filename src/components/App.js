@@ -1,15 +1,13 @@
 import React from 'react';
 import '../css/App.css';
-import Appbar from './Appbar';
+import Canvas from './Canvas'
 
 function App() {
-  console.log("start");
   return (
     <div className="App">
+      <Canvas width={256} height={128}/>
     </div>
   );
 }
-
-
 
 export default App;
